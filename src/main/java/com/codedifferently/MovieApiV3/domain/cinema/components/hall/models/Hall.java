@@ -1,33 +1,30 @@
 package com.codedifferently.MovieApiV3.domain.cinema.components.hall.models;
 
-import com.codedifferently.MovieApiV3.domain.cinema.components.hallRow.models.HallRow;
-import com.codedifferently.MovieApiV3.domain.movie.models.Movie;
+import com.codedifferently.MovieApiV3.domain.cinema.components.models.HallRow;
 
 import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.Set;
 
 @Entity
-public class Hall {
+public class Hall implements Comparable<Hall> {
 
     @Id
     @GeneratedValue
     private Long id;
 
     private Integer roomNumber;
-
-    @ManyToOne
-    @JoinColumn(name= "movieId")
-    private Movie movie;
+    @OneToMany(targetEntity = HallRow.class, cascade = CascadeType.ALL, fetch= FetchType.EAGER, orphanRemoval =true )
+    @JoinColumn(name = "hallId", referencedColumnName = "id")
+    private Set <HallRow> rows;
 
     private LocalTime showTime;
 
     public Hall() {
     }
 
-    public Hall(Integer roomNumber, Set<HallRow> rows, Movie movie, LocalTime showTime) {
+    public Hall(Integer roomNumber, LocalTime showTime) {
         this.roomNumber = roomNumber;
-        this.movie = movie;
         this.showTime = showTime;
     }
 
@@ -47,13 +44,6 @@ public class Hall {
         this.roomNumber = roomNumber;
     }
 
-    public Movie getMovie() {
-        return movie;
-    }
-
-    public void setMovie(Movie movie) {
-        this.movie = movie;
-    }
 
     public LocalTime getShowTime() {
         return showTime;
@@ -63,5 +53,26 @@ public class Hall {
         this.showTime = showTime;
     }
 
+    public Set<HallRow> getRows() {
+        return rows;
+    }
 
+    public void setRows(Set<HallRow> rows) {
+        this.rows = rows;
+    }
+
+    @Override
+    public String toString() {
+        return "Hall{" +
+                "id=" + id +
+                ", roomNumber=" + roomNumber +
+                ", rows=" + rows +
+                ", showTime=" + showTime +
+                '}';
+    }
+
+    @Override
+    public int compareTo(Hall o) {
+        return 0;
+    }
 }

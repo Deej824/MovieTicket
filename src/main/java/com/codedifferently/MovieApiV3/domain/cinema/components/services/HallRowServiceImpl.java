@@ -1,9 +1,9 @@
-package com.codedifferently.MovieApiV3.domain.cinema.components.hallRow.services;
+package com.codedifferently.MovieApiV3.domain.cinema.components.services;
 
-import com.codedifferently.MovieApiV3.domain.cinema.components.hallRow.exceptions.HallRowNotFoundException;
-import com.codedifferently.MovieApiV3.domain.cinema.components.hallRow.models.HallRow;
-import com.codedifferently.MovieApiV3.domain.cinema.components.hallRow.repos.HallRowRepo;
-import com.codedifferently.MovieApiV3.domain.cinema.components.hallRow.models.HallSeat;
+import com.codedifferently.MovieApiV3.domain.cinema.components.exceptions.HallRowNotFoundException;
+import com.codedifferently.MovieApiV3.domain.cinema.components.models.HallRow;
+import com.codedifferently.MovieApiV3.domain.cinema.components.repos.HallRowRepo;
+import com.codedifferently.MovieApiV3.domain.cinema.components.models.HallSeat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,13 +41,24 @@ public class HallRowServiceImpl implements HallRowService{
 
     @Override
     public HallRow update(HallRow hallRow) throws HallRowNotFoundException{
-        //Todo : finish Update
-        return null;
+
+
+        Long id = hallRow.getId();
+        Optional <HallRow> hallRowExistOption = rowRepo.findById(id);
+        if (hallRowExistOption.isEmpty())
+            throw new HallRowNotFoundException("No hall row exists with that id");
+        return rowRepo.save(hallRow);
     }
 
     @Override
     public void delete(Long id) throws HallRowNotFoundException {
-        //Todo : finish delete
+
+
+        Optional<HallRow> hallRowExistOption = rowRepo.findById(id);
+        if (hallRowExistOption.isEmpty())
+            throw new HallRowNotFoundException("No hall row exists with that id");
+        HallRow hallRowToRemove = hallRowExistOption.get();
+        rowRepo.delete(hallRowToRemove);
     }
 
     private Set<HallSeat> generateSeats(String rowName){

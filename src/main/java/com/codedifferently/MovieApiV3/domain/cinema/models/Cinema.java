@@ -1,12 +1,12 @@
 package com.codedifferently.MovieApiV3.domain.cinema.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.codedifferently.MovieApiV3.domain.cinema.components.hall.models.Hall;
+
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-public class Cinema {
+public class Cinema implements Comparable<Cinema> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,7 +14,16 @@ public class Cinema {
 
     private String name;
 
+    @OneToMany(targetEntity = Hall.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "cinemaId", referencedColumnName = "id")
+    private Set<Hall> halls;
+
+
     public Cinema() {
+    }
+
+    public Cinema(String name) {
+        this.name = name;
     }
 
     public Long getId() {
@@ -31,5 +40,18 @@ public class Cinema {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Hall> getHalls() {
+        return halls;
+    }
+
+    public void setHalls(Set<Hall> halls) {
+        this.halls = halls;
+    }
+
+    @Override
+    public int compareTo(Cinema o) {
+        return 0;
     }
 }

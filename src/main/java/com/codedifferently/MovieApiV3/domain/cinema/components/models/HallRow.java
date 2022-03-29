@@ -1,10 +1,10 @@
-package com.codedifferently.MovieApiV3.domain.cinema.components.hallRow.models;
+package com.codedifferently.MovieApiV3.domain.cinema.components.models;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class HallRow {
+public class HallRow implements Comparable<HallRow>{
     @Id
     @GeneratedValue
     private Long id;
@@ -53,5 +53,10 @@ public class HallRow {
                 ", name='" + name + '\'' +
                 ", seats=" + seats +
                 '}';
+    }
+
+    @Override
+    public int compareTo(HallRow o) {
+        return 0;
     }
 }

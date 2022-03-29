@@ -1,7 +1,7 @@
 package com.codedifferently.MovieApiV3;
 
-import com.codedifferently.MovieApiV3.domain.cinema.components.hallRow.models.HallRow;
-import com.codedifferently.MovieApiV3.domain.cinema.components.hallRow.services.HallRowService;
+import com.codedifferently.MovieApiV3.domain.cinema.components.models.HallRow;
+import com.codedifferently.MovieApiV3.domain.cinema.components.services.HallRowService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

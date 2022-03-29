@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Optional;
 
 public interface HallRepo extends CrudRepository<Hall, Long> {
-    Optional<Hall> findByMovie(Movie movie);
+  //  Optional<Hall> findByMovie(Movie movie);
 }

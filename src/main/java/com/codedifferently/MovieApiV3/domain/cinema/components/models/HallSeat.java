@@ -1,4 +1,4 @@
-package com.codedifferently.MovieApiV3.domain.cinema.components.hallRow.models;
+package com.codedifferently.MovieApiV3.domain.cinema.components.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
