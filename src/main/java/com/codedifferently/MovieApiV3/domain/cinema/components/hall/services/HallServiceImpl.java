@@ -1,18 +1,23 @@
 package com.codedifferently.MovieApiV3.domain.cinema.components.hall.services;
 
+import com.codedifferently.MovieApiV3.domain.cinema.components.exceptions.SeatNotFoundException;
 import com.codedifferently.MovieApiV3.domain.cinema.components.hall.models.Hall;
+import com.codedifferently.MovieApiV3.domain.cinema.components.hall.models.HallSeatRequest;
 import com.codedifferently.MovieApiV3.domain.cinema.components.hall.repos.HallRepo;
 import com.codedifferently.MovieApiV3.domain.cinema.components.exceptions.HallNotFoundException;
 import com.codedifferently.MovieApiV3.domain.cinema.components.models.HallRow;
+import com.codedifferently.MovieApiV3.domain.cinema.components.models.HallSeat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 @Service
 public class HallServiceImpl implements HallService {
@@ -65,6 +70,48 @@ public class HallServiceImpl implements HallService {
         Hall hall = hallExistOption.get();
         hallRepo.delete(hall);
 
+    }
+
+    @Override
+    public Boolean checkStatusOfSeat(HallSeatRequest seatRequest) throws SeatNotFoundException {
+        Hall hall = seatRequest.getHall();
+        String rowName = seatRequest.getRowRequest();
+        Set <HallRow> filteredRows = hall.getRows().stream()
+                .filter(hallRow -> rowName.equals(seatRequest.getRowRequest()))
+                .collect(Collectors.toSet());
+        if (filteredRows.isEmpty())
+            throw new SeatNotFoundException(" Seat not found");
+        HallRow row = filteredRows.iterator().next();
+        Set<HallSeat> filteredSeats = row.getSeats().stream()
+                .filter(seat -> seat.getSeatLocation().equals(seatRequest.getSeatRequest()))
+                .collect(Collectors.toSet());
+        if (filteredSeats.isEmpty())
+            throw new SeatNotFoundException("Seat not found");
+        HallSeat seat = filteredSeats.iterator().next();
+
+        return seat.getReserved();
+    }
+
+    @Override
+    public void reserveSeat(HallSeatRequest seatRequest) throws SeatNotFoundException {
+        Hall hall = seatRequest.getHall();
+        String rowName = seatRequest.getRowRequest();
+        Set <HallRow> filteredRows = hall.getRows().stream()
+                .filter(hallRow -> rowName.equals(seatRequest.getRowRequest()))
+                .collect(Collectors.toSet());
+        if (filteredRows.isEmpty())
+            throw new SeatNotFoundException(" Seat not found");
+        HallRow row = filteredRows.iterator().next();
+        Set<HallSeat> filteredSeats = row.getSeats().stream()
+                .filter(seat -> seat.getSeatLocation().equals(seatRequest.getSeatRequest()))
+                .collect(Collectors.toSet());
+        if (filteredSeats.isEmpty())
+            throw new SeatNotFoundException("Seat not found");
+        HallSeat seat = filteredSeats.iterator().next();
+        if(seat.getReserved())
+            throw new SeatNotFoundException("Seat Reserved");
+        seat.setReserved(true);
+        hallRepo.save(hall);
     }
 
 

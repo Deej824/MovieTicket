@@ -48,6 +48,9 @@ public class HallSeat implements Comparable<HallSeat>{
         isReserved = reserved;
     }
 
+
+
+
     @Override
     public String toString() {
         return "HallSeat{" +
@@ -60,7 +63,7 @@ public class HallSeat implements Comparable<HallSeat>{
 
     @Override
     public int compareTo(HallSeat o) {
-        return seatLocation.compareTo(o.seatLocation);
+        return seatLocation.compareTo(o.getSeatLocation());
     }
 
 

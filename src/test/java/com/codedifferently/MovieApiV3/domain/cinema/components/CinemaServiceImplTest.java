@@ -53,7 +53,7 @@ public class CinemaServiceImplTest {
     @DisplayName("Cinema created by created halls - success")
     public void createCinemaTest2(){
         BDDMockito.doReturn(output).when(cinemaRepo).save(ArgumentMatchers.any());
-        Cinema returnCinema = cinemaService.create(input);
+        Cinema returnCinema = cinemaService.create(output);
         Integer expected = 20;
         Integer actual = returnCinema.getHalls().size();
         Assertions.assertEquals(expected,actual);

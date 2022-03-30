@@ -73,6 +73,6 @@ public class Hall implements Comparable<Hall> {
 
     @Override
     public int compareTo(Hall o) {
-        return 0;
+        return roomNumber.compareTo(o.getRoomNumber());
     }
 }

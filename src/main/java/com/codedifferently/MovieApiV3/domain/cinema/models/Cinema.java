@@ -52,6 +52,6 @@ public class Cinema implements Comparable<Cinema> {
 
     @Override
     public int compareTo(Cinema o) {
-        return 0;
+        return name.compareTo(o.getName());
     }
 }

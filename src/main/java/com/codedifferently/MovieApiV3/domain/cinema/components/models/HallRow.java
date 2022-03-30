@@ -57,6 +57,6 @@ public class HallRow implements Comparable<HallRow>{
 
     @Override
     public int compareTo(HallRow o) {
-        return 0;
+        return name.compareTo(o.getName());
     }
 }
