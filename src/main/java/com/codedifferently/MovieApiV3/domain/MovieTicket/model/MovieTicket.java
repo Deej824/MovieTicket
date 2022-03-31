@@ -19,7 +19,7 @@ public class MovieTicket {
 
     private String desiredSeat;
     private String desiredRow;
-    private LocalTime localTime;
+    private LocalTime showTime;
     private Integer hallRoomNumber;
 
 
@@ -37,12 +37,11 @@ public class MovieTicket {
 //        this.desiredRow = desiredRow;
 //    }
 
-    public MovieTicket(HallSeatRequest hallSeatRequest, LocalTime localTime){
+    public MovieTicket(HallSeatRequest hallSeatRequest, LocalTime showTime){
         this.desiredSeat=hallSeatRequest.getSeatRequest();
         this.hallRoomNumber= hallSeatRequest.getHall().getRoomNumber();
         this.desiredRow = hallSeatRequest.getRowRequest();
-        this.localTime=localTime;
-
+        this.showTime=showTime;
 
     }
 
@@ -58,11 +57,11 @@ public class MovieTicket {
     }
 
     public LocalTime getLocalTime() {
-        return localTime;
+        return showTime;
     }
 
-    public void setLocalTime(LocalTime localTime) {
-        this.localTime = localTime;
+    public void setLocalTime(LocalTime showTime) {
+        this.showTime = showTime;
     }
 
     public Long getId() {
@@ -95,7 +94,7 @@ public class MovieTicket {
                 "id=" + id +
                 ", desiredSeat='" + desiredSeat + '\'' +
                 ", desiredRow='" + desiredRow + '\'' +
-                ", localTime=" + localTime +
+                ", localTime=" + showTime +
                 ", hallRoomNumber=" + hallRoomNumber +
                 '}';
     }

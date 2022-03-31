@@ -51,18 +51,18 @@ public class MovieTicketServiceTest {
     public void setUp() throws MovieTicketPurchaseException, SeatNotFoundException {
 
         hallSeatRequest = new HallSeatRequest(new Hall(1, LocalTime.parse("01:25")), "A", "2");
-        input = new Hall(1, LocalTime.now());
-        output = new Hall(1, LocalTime.now());
-        Set<HallRow> rows = new TreeSet<>();
-        Set<HallSeat> seats = new TreeSet<>();
-        seat01 = new HallSeat("2");
-        seat01.setReserved(false);
-        seats.add(seat01);
-        HallRow hallRow = new HallRow("A");
-        hallRow.setSeats(seats);
-        rows.add(hallRow);
-        output.setRows(rows);
-        output.setId(1l);
+//        input = new Hall(1, LocalTime.now());
+//        output = new Hall(1, LocalTime.now());
+//        Set<HallRow> rows = new TreeSet<>();
+//        Set<HallSeat> seats = new TreeSet<>();
+//        seat01 = new HallSeat("2");
+//        seat01.setReserved(false);
+//        seats.add(seat01);
+//        HallRow hallRow = new HallRow("A");
+//        hallRow.setSeats(seats);
+//        rows.add(hallRow);
+//        output.setRows(rows);
+//        output.setId(1l);
         movieTicket = new MovieTicket(hallSeatRequest, LocalTime.parse("01:25"));
         movieTicket.setId(1l);
 
