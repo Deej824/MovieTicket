@@ -20,29 +20,25 @@ public class MovieTicketServiceImpl implements MovieTicketService {
     private HallService hallService;
 
     @Autowired
-    public MovieTicketServiceImpl(MovieTicketRepo movieTicketRepo) {
+    public MovieTicketServiceImpl(MovieTicketRepo movieTicketRepo, HallService hallService) {
         this.movieTicketRepo = movieTicketRepo;
+        this.hallService=hallService;
     }
 
+
     @Override
-    public MovieTicket purchaseTicket(MovieTicket movieTicket) throws MovieTicketPurchaseException, SeatNotFoundException {
-        // movieTicket.getDesiredSeat
-        // Send in a HallSeatRequest
-        //Use Hall Service to check to see if seat is available using the checkStatusofSeat method
-        // If seat is available we will call reserveSeat method and send in our desired seat.
-        // MovieTicketRepo saves the ticket
-        HallSeatRequest hallSeatRequest = new HallSeatRequest(new Hall(movieTicket.getHallRoomNumber(), LocalTime.now()),movieTicket.getDesiredRow(), movieTicket.getDesiredSeat());
+    public MovieTicket purchaseTicket(HallSeatRequest hallSeatRequest, LocalTime localTime) throws MovieTicketPurchaseException, SeatNotFoundException {
 
-       Boolean isDesiredSeatAvailable = hallService.checkStatusOfSeat(hallSeatRequest);
-
-       if (isDesiredSeatAvailable){
-           hallService.reserveSeat(hallSeatRequest);
-           movieTicketRepo.save(movieTicket);
-       }
-       else throw new MovieTicketPurchaseException("Could not purchase ticket");
+        MovieTicket movieTicket;
+        Boolean isDesiredSeatAvailable = hallService.checkStatusOfSeat(hallSeatRequest);
+        if (!isDesiredSeatAvailable){
+            hallService.reserveSeat(hallSeatRequest);
+            movieTicket= new MovieTicket(hallSeatRequest, localTime);
+        }
+        else throw new MovieTicketPurchaseException( "Could not purchase ticket");
 
 
         return movieTicketRepo.save(movieTicket) ;
     }
-    }
+}
 

@@ -2,6 +2,7 @@ package com.codedifferently.MovieApiV3.domain.MovieTicket.model;
 
 
 import com.codedifferently.MovieApiV3.domain.cinema.components.hall.models.Hall;
+import com.codedifferently.MovieApiV3.domain.cinema.components.hall.models.HallSeatRequest;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,16 +23,31 @@ public class MovieTicket {
     private Integer hallRoomNumber;
 
 
+
+
+
     public MovieTicket( ){
 
     }
 
-    public MovieTicket(Integer hallRoomNumber, String desiredSeat,String desiredRow, LocalTime localTime) {
-        this.desiredSeat = desiredSeat;
-        this.localTime = localTime;
-        this.hallRoomNumber = hallRoomNumber;
-        this.desiredRow = desiredRow;
+//    public MovieTicket(Integer hallRoomNumber, String desiredSeat,String desiredRow, LocalTime localTime) {
+//        this.desiredSeat = desiredSeat;
+//        this.localTime = localTime;
+//        this.hallRoomNumber = hallRoomNumber;
+//        this.desiredRow = desiredRow;
+//    }
+
+    public MovieTicket(HallSeatRequest hallSeatRequest, LocalTime localTime){
+        this.desiredSeat=hallSeatRequest.getSeatRequest();
+        this.hallRoomNumber= hallSeatRequest.getHall().getRoomNumber();
+        this.desiredRow = hallSeatRequest.getRowRequest();
+        this.localTime=localTime;
+
+
     }
+
+
+
 
     public String getDesiredSeat() {
         return desiredSeat;
@@ -78,6 +94,7 @@ public class MovieTicket {
         return "MovieTicket{" +
                 "id=" + id +
                 ", desiredSeat='" + desiredSeat + '\'' +
+                ", desiredRow='" + desiredRow + '\'' +
                 ", localTime=" + localTime +
                 ", hallRoomNumber=" + hallRoomNumber +
                 '}';
