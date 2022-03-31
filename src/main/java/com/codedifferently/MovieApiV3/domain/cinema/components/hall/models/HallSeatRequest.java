@@ -39,4 +39,14 @@ public class HallSeatRequest {
     public void setSeatRequest(String seatRequest) {
         this.seatRequest = seatRequest;
     }
+
+    @Override
+    public String toString() {
+        return "HallSeatRequest{" +
+                "hall=" + hall +
+                ", rowRequest='" + rowRequest + '\'' +
+                ", seatRequest='" + seatRequest + '\'' +
+                '}';
+    }
 }
+

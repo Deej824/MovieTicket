@@ -40,6 +40,7 @@ public class HallServiceImplTest {
     private HallSeat seat01;
     private HallSeat seat02;
 
+
     @BeforeEach
     public void setUp() {
 
@@ -79,6 +80,31 @@ public class HallServiceImplTest {
         });
 
     }
+
+    @Test
+    @DisplayName("Seat Does Not Exist - Fail")
+    public void SeatDoesNotExistTest1() throws SeatNotFoundException {
+
+        String rowName = "C";
+        String seatLocation = "20";
+        Assertions.assertThrows(SeatNotFoundException.class, () -> {
+            hallService.checkStatusOfSeat(new HallSeatRequest(output, rowName,seatLocation));
+        });
+
+    }
+
+    @Test
+    @DisplayName("Seat check success")
+    public void SeatCheckTest() throws SeatNotFoundException {
+            String rowName = "B";
+            String seatLocation = "2";
+        hallService.checkStatusOfSeat(new HallSeatRequest(output, rowName, seatLocation));
+        Assertions.assertFalse(seat01.getReserved());
+
+        }
+
+
+
 
 
     @Test
